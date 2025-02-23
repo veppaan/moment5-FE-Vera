@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moment 4 Frontend</title><!--titel för webbsidan--> 
+    <link rel="stylesheet" href="css/main.scss">
+    <script src="js/main.js" type="module" ></script>
+</head>
+<body>
+    <header>
+        <div class="big-header">
+            <nav>
+            
+                <ul class="headmenu"><!-- Menyrad -->
+                    <li><a href="index.html">Startsida</a></li>
+                    <li><a href="sass.html">SASS</a></li>
+                    <li><a href="#">Animering</a></li>
+                    <li><a href="#">Kontakta oss</a></li>
+                    <li><a href="#">Om oss</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="smaller-screen">
+            <div class="menu">
+            
+            <button class="menu-btn open" id="open-menu">
+                <span class="menu-icon">
+                    <span class="bars"></span>
+                    <span class="bars"></span>
+                    <span class="bars"></span>
+                </span>
+                <span class="menu-text">Meny</span>
+            </button>
+        </div>
+            <nav id="nav-menu">
+                <button class="menu-btn close" id="close-menu">
+                    <span class="menu-icon">
+                        <span class="bars cross1"></span>
+                        <span class="bars cross2"></span>
+                    </span>
+                    <span class="menu-text">Stäng</span>
+                </button>
+                <ul class="headmenu"><!-- Menyrad -->
+                    <li><a href="index.html">Startsida</a></li>
+                    <li><a href="sass.html">SASS</a></li>
+                    <li><a href="#">Animering</a></li>
+                    <li><a href="#">Kontakta oss</a></li>
+                    <li><a href="#">Om oss</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="start-text">
+        <h1>Moment 4 - Frontend-baserad webbutveckling</h1>
+        <h2>Vera Kippel</h2>
+        </div>
+        <div class="flex-animation">
+        <section class="animation">
+            <h3>Animation 1</h3>
+            <div id="animation-one"></div>
+        </section>
+        <section class="animation">
+            <h3>Animation 2</h3>
+            <p>Hovra över hjärtat för att mäta din puls!</p>
+            <img id="animation-two" src="images/heart.svg" alt="Ritat rosa hjärta">
+        </section>
+        <section class="animation">
+            <h3>Animation 3</h3>
+            <p id="animation-three">Klicka för party...</p>
+        </section>
+        </div>
+        <hr>
+        <footer>
+            <p>Frontendbaserad webbutveckling</p>
+            <p>Vera Kippel</p>
+        </footer>
+    </body>
+    </html>

@@ -1,0 +1,19 @@
+{
+  "name": "moment4-fe-vera",
+  "version": "1.0.0",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "browserlist": "> 0.5%, last versions, not dead",
+  "author": "Vera Kippel",
+  "license": "ISC",
+  "description": "Moment 4 - Frontend-baserad webbutveckling",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.13.3",
+    "parcel": "^2.13.3",
+    "sharp": "^0.33.5",
+    "svgo": "^3.3.2"
+  }
+}

@@ -1,0 +1,82 @@
+@keyframes bouncingBall{
+    from{
+        background-color: red;
+        transform: translate(0px, 0px) ;
+    }
+    to{
+        background-color: green;
+        transform: translate(0px, -100px);
+    }
+}
+#animation-one{
+    border-radius: 100px;
+    width: 100px;
+    height: 100px;
+    animation: bouncingBall 1s infinite alternate ease-in;
+}
+
+@keyframes beatingHeart{
+    0%{
+        transform:scale(1);
+    }
+    40%{
+        transform:scale(1.2);
+    }
+    50%{
+        transform:scale(1);
+    }
+    60%{
+        transform:scale(1.2);
+    }
+    70%{
+        transform:scale(1);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+#animation-two:hover{
+    display: block;
+    animation: beatingHeart 2s ease-out infinite normal;
+}
+
+@keyframes partyText{
+    0%{
+        background-color: red;
+        color: black;
+        transform: scale(2) rotate(45deg);
+    }
+    20%{
+        background-color: green;
+        color: white;
+        transform: scale(1) rotateX(200deg);
+    }
+    40%{
+        background-color: orange;
+        color: green;
+        transform: scale(3) rotate(-45deg);
+    }
+    60%{
+        background-color: yellow;
+        color: blue;
+        transform: scale(2) rotateX(200deg);
+    }
+    80%{
+        background-color: blueviolet;
+        color: yellow;
+        transform: scale(4) rotate(45deg);
+    }
+    100%{
+        background-color: blue;
+        color: white;
+        transform: scale(1);
+    }
+}
+#animation-three{
+    border: 2px solid #ddd;
+    padding: 0.5em;
+    border-radius: 8px;
+    background-color: #08667E;
+    color: #F6DDCC;
+    cursor: pointer;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moment 3 Frontend</title><!--titel för webbsidan--> 
+    <link rel="stylesheet" href="css/main.scss">
+    <script src="js/main.js" type="module" ></script>
+</head>
+<body>
+    <header>
+        <div class="big-header">
+            <nav>
+            
+                <ul class="headmenu"><!-- Menyrad -->
+                    <li><a href="index.html">Startsida</a></li>
+                    <li><a href="sass.html">SASS</a></li>
+                    <li><a href="animation.html">Animering</a></li>
+                    <li><a href="#">Kontakta oss</a></li>
+                    <li><a href="#">Om oss</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="smaller-screen">
+            <div class="menu">
+            
+            <button class="menu-btn open" id="open-menu">
+                <span class="menu-icon">
+                    <span class="bars"></span>
+                    <span class="bars"></span>
+                    <span class="bars"></span>
+                </span>
+                <span class="menu-text">Meny</span>
+            </button>
+        </div>
+            <nav id="nav-menu">
+                <button class="menu-btn close" id="close-menu">
+                    <span class="menu-icon">
+                        <span class="bars cross1"></span>
+                        <span class="bars cross2"></span>
+                    </span>
+                    <span class="menu-text">Stäng</span>
+                </button>
+                <ul class="headmenu"><!-- Menyrad -->
+                    <li><a href="index.html">Startsida</a></li>
+                    <li><a href="sass.html">SASS</a></li>
+                    <li><a href="animation.html">Animering</a></li>
+                    <li><a href="#">Kontakta oss</a></li>
+                    <li><a href="#">Om oss</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="start-text">
+        <h1>Moment 3 - Frontend-baserad webbutveckling</h1>
+        </div>
+        <div class="flex-info">
+        <section class="info">
+            <h3>Startsida</h3>
+            <p>Detta är startsidan för moment 3 där jag lär mig om SASS, det är spännande!</p>
+            <div class="majken-pictures">
+            <picture>
+                <source srcset="images/majken1.jpg?as=avif&width=302" type="image/avif">
+                <source srcset="images/majken1.jpg?as=webp&width=302" type="image/webp">
+                <img src="images/majken1.jpg" alt="Bild på tax-valp" width="302" height="403">
+            </picture>
+            <picture>
+                <source srcset="images/majken2.jpg?as=avif&width=302" type="image/avif">
+                <source srcset="images/majken2.jpg?as=webp&width=302" type="image/webp">
+                <img src="images/majken2.jpg" alt="Bild på tax" width="302" height="403">
+            </picture>
+        </div>
+        </section>
+        </div>
+    </body>
+    </html>
