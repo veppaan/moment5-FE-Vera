@@ -1,5 +1,5 @@
 {
-  "name": "moment4-fe-vera",
+  "name": "moment5-fe-vera",
   "version": "1.0.0",
   "source": "src/index.html",
   "scripts": {
@@ -9,7 +9,7 @@
   "browserlist": "> 0.5%, last versions, not dead",
   "author": "Vera Kippel",
   "license": "ISC",
-  "description": "Moment 4 - Frontend-baserad webbutveckling",
+  "description": "Moment 5 - Frontend-baserad webbutveckling",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.13.3",
     "parcel": "^2.13.3",
