@@ -33,3 +33,17 @@ function startAnimation(){
         animationBtn.style.animation="";
     }, 2000);
 }
+
+//Ladda in data från URL
+async function loadData(){
+    try{
+        const response = await fetch("https://studenter.miun.se/~mallar/dt211g/");
+        if(!response.ok){
+            throw new Error("Fel vid laddnig av datan...");
+        }
+        courses = await response.json();
+    }catch(error){
+        console.error(error);
+        document.querySelector("#error").innerHTML = "<p>Ett fel uppstod - prova igen senare!</p>"
+    }
+}
