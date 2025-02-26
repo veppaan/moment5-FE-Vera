@@ -49,14 +49,15 @@ async function loadData(){
             throw new Error("Fel vid laddnig av datan...");
         }
         data = await response.json();
-        sortData(data);
+        sortPrograms(data);
+        sortCourses(data);
     }catch(error){
         console.error(error);
         document.querySelector("#error").innerHTML = "<p>Ett fel uppstod - prova igen senare!</p>"
     }
 }
 
-function sortData(data){
+function sortPrograms(data){
     const programs = data.filter(a => a.type === "Program");
     programs.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
     for(let i = 0; i < 6; i++){
@@ -64,17 +65,16 @@ function sortData(data){
     }
     printFirstChart(topApplications);
 }
+
 function printFirstChart(data){
-    const ctx = document.getElementById("firstChart");
-    let newApplication = data;
-    console.log(newApplication);
-    new Chart(ctx, {
+    const firstChart = document.getElementById("firstChart");
+    new Chart(firstChart, {
         type: "bar",
         data: {
-            labels: [newApplication[0].name, newApplication[1].name, newApplication[2].name, newApplication[3].name, newApplication[4].name, newApplication[5].name],
+            labels: [data[0].name, data[1].name, data[2].name, data[3].name, data[4].name, data[5].name],
             datasets: [{
                 label: "Antal ansökningar",
-                data: [newApplication[0].applicantsTotal, newApplication[1].applicantsTotal, newApplication[2].applicantsTotal, newApplication[3].applicantsTotal, newApplication[4].applicantsTotal, newApplication[5].applicantsTotal],
+                data: [data[0].applicantsTotal, data[1].applicantsTotal, data[2].applicantsTotal, data[3].applicantsTotal, data[4].applicantsTotal, data[5].applicantsTotal],
                 borderWidth: 1
             }],
         },
@@ -89,3 +89,36 @@ function printFirstChart(data){
     });
 }
 
+function sortCourses(data){
+    let fiveCourses = [];
+    const courses = data.filter(a => a.type === "Kurs");
+    courses.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
+    for(let i = 0; i < 5; i++){
+        fiveCourses.push(courses[i]);
+    }
+    printSecondChart(courses);
+}
+    function printSecondChart(data){
+        const secondChart = document.getElementById("secondChart");
+        new Chart(secondChart, {
+            type: "pie",
+            data: {
+                labels: [data[0].name, data[1].name, data[2].name, data[3].name, data[4].name],
+                datasets: [{
+                    label: "Antal ansökningar",
+                    data: [data[0].applicantsTotal, data[1].applicantsTotal, data[2].applicantsTotal, data[3].applicantsTotal, data[4].applicantsTotal],
+                    borderWidth: 1
+                }],
+            },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Mest sökta kurser HT23 på Mittuniversitetet"
+                        }
+                    }
+            }
+        });
+    }
