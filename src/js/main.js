@@ -24,8 +24,9 @@ function toggleMenu(){
 
 let animationBtn = document.getElementById("animation-three");
 
-animationBtn.addEventListener("click", startAnimation);
-
+if(animationBtn){
+    animationBtn.addEventListener("click", startAnimation);
+}
 function startAnimation(){
     animationBtn.style.animation ="partyText 2s alternate ease-in-out"
 
@@ -34,7 +35,13 @@ function startAnimation(){
     }, 2000);
 }
 
+window.onload = () =>{
+    loadData();
+}
+
 //Ladda in data från URL
+let courses = [];
+let topApplications = [];
 async function loadData(){
     try{
         const response = await fetch("https://studenter.miun.se/~mallar/dt211g/");
@@ -42,8 +49,18 @@ async function loadData(){
             throw new Error("Fel vid laddnig av datan...");
         }
         courses = await response.json();
+        sortData(courses);
     }catch(error){
         console.error(error);
         document.querySelector("#error").innerHTML = "<p>Ett fel uppstod - prova igen senare!</p>"
     }
 }
+
+function sortData(data){
+    data.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
+    for(let i = 0; i < 6; i++){
+        topApplications.push(data[i]);
+    }
+    console.log(topApplications);
+}
+
