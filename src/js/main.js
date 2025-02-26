@@ -40,7 +40,7 @@ window.onload = () =>{
 }
 
 //Ladda in data från URL
-let courses = [];
+let data = [];
 let topApplications = [];
 async function loadData(){
     try{
@@ -48,8 +48,8 @@ async function loadData(){
         if(!response.ok){
             throw new Error("Fel vid laddnig av datan...");
         }
-        courses = await response.json();
-        sortData(courses);
+        data = await response.json();
+        sortData(data);
     }catch(error){
         console.error(error);
         document.querySelector("#error").innerHTML = "<p>Ett fel uppstod - prova igen senare!</p>"
@@ -57,13 +57,14 @@ async function loadData(){
 }
 
 function sortData(data){
-    data.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
+    const programs = data.filter(a => a.type === "Program");
+    programs.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
     for(let i = 0; i < 6; i++){
-        topApplications.push(data[i]);
+        topApplications.push(programs[i]);
     }
-    printChart(topApplications);
+    printFirstChart(topApplications);
 }
-function printChart(data){
+function printFirstChart(data){
     const ctx = document.getElementById("firstChart");
     let newApplication = data;
     console.log(newApplication);
@@ -75,8 +76,16 @@ function printChart(data){
                 label: "Antal ansökningar",
                 data: [newApplication[0].applicantsTotal, newApplication[1].applicantsTotal, newApplication[2].applicantsTotal, newApplication[3].applicantsTotal, newApplication[4].applicantsTotal, newApplication[5].applicantsTotal],
                 borderWidth: 1
-            }]
+            }],
         },
-    })
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Mest sökta program HT23"
+                    }
+                }
+        }
+    });
 }
 
