@@ -82,7 +82,7 @@ function printFirstChart(data){
                 plugins: {
                     title: {
                         display: true,
-                        text: "Mest sökta program HT23"
+                        text: "Mest sökta program HT23 på Mittuniversitetet"
                     }
                 }
         }
