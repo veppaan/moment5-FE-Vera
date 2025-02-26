@@ -61,6 +61,22 @@ function sortData(data){
     for(let i = 0; i < 6; i++){
         topApplications.push(data[i]);
     }
-    console.log(topApplications);
+    printChart(topApplications);
+}
+function printChart(data){
+    const ctx = document.getElementById("firstChart");
+    let newApplication = data;
+    console.log(newApplication);
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: [newApplication[0].name, newApplication[1].name, newApplication[2].name, newApplication[3].name, newApplication[4].name, newApplication[5].name],
+            datasets: [{
+                label: "Antal ansökningar",
+                data: [newApplication[0].applicantsTotal, newApplication[1].applicantsTotal, newApplication[2].applicantsTotal, newApplication[3].applicantsTotal, newApplication[4].applicantsTotal, newApplication[5].applicantsTotal],
+                borderWidth: 1
+            }]
+        },
+    })
 }
 
