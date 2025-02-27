@@ -1,5 +1,7 @@
 "use strict";
 
+const { resolve } = require("chart.js/helpers");
+
 //Hamburgermeny
 let openBtn = document.getElementById("open-menu");
 let closeBtn = document.getElementById("close-menu")
@@ -163,15 +165,51 @@ function printSecondChart(data){
 
 //Test kartfunktion
 
+async function getLatitude(){
+    return new Promise((resolve) =>{
+        if("geolocation" in navigator){
+            navigator.geolocation.getCurrentPosition(function(position){
+                let latitude = position.coords.latitude;
+                resolve(latitude)
+            }, function(error){
+                console.error("Fel vi hämtning av position: ", error.message);
+            });
+        }else{
+            console.error("Lokalisering stödjs ej i din webbläsare");
+        }
+    });
+}
+async function getLongitude(){
+    return new Promise((resolve) =>{
+        if("geolocation" in navigator){
+            navigator.geolocation.getCurrentPosition(function(position){
+                let longitude = position.coords.longitude;
+                resolve(longitude)
+            }, function(error){
+                console.error("Fel vi hämtning av position: ", error.message);
+            });
+        }else{
+            console.error("Lokalisering stödjs ej i din webbläsare");
+        }
+    });
+}
+
 let map;
 
 async function initMap() {
+    console.log("map");
+  const latitude = await getLatitude();
+  const longitude = await getLongitude();
+  console.log("latitud: " + latitude);
+  console.log("longitud: " + longitude);
+  
   const { Map } = await google.maps.importLibrary("maps");
 
-  map = new Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
+map = new Map(document.getElementById("map"), {
+    center: { lat: latitude, lng: longitude },
+    zoom: 13,
   });
+  
 }
 
 
