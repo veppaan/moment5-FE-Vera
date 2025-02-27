@@ -50,7 +50,6 @@ window.onload = () =>{
     if (firstChart || secondChart){
     loadData();
     }
-    initMap();
 }
 
 //Ladda in data från URL
@@ -165,6 +164,35 @@ function printSecondChart(data){
 
 //Test kartfunktion
 
+const map = L.map("map").setView([59.325, 18.05], 10); 
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+document.getElementById("search").addEventListener("keydown", (event) =>{
+    let errorTxt = document.getElementById("errorMessage");
+    errorTxt.style.visibility="hidden";
+    if(event.key === "Enter"){
+        let inputValue = event.target.value;
+    
+    fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(inputValue)}&format=json`)
+    .then(response => response.json())
+    .then(data => {
+        const result = data[0];
+        const latitude = result.lat;
+        const longitude = result.lon;
 
+        map.setView([latitude, longitude], 11);
+        
+    })
+    .catch(error => {
+        console.error("Fel vid platshämtning:", error);
+        errorTxt.innerHTML="Fel vid inhämtning av plats, kolla stavfel och försök igen!";
+        errorTxt.style.visibility="visible";
+    });
+
+    }
+}
+)
 
 

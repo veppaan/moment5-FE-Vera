@@ -47,7 +47,9 @@ footer{
 #loading-map{
     display: none;
 }
-
+#errorMessage{
+    visibility: hidden;
+}
 @media (prefers-color-scheme: dark){
     $theme: true;
     *{
