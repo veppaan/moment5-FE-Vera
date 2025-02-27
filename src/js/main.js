@@ -165,25 +165,6 @@ function printSecondChart(data){
 
 //Test kartfunktion
 
-let map;
-/**
- * Laddar in användarens latitud och longitud och lägger in de i karta
- */
-async function initMap() {
-    let loadingText = document.getElementById("loading-map");
-    loadingText.style.display="block";
-  const latitude = await getLatitude();
-  const longitude = await getLongitude();
-  
-  const { Map } = await google.maps.importLibrary("maps");
 
-  loadingText.style.display="none";
-
-map = new Map(document.getElementById("map"), {
-    center: { lat: latitude, lng: longitude },
-    zoom: 8,
-  });
-  
-}
 
 
