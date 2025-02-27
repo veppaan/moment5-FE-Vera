@@ -182,7 +182,7 @@ document.getElementById("search").addEventListener("keydown", (event) =>{
         const latitude = result.lat;
         const longitude = result.lon;
 
-        map.setView([latitude, longitude], 11);
+        map.setView([latitude, longitude], 9);
         
     })
     .catch(error => {
