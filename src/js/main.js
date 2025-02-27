@@ -187,9 +187,9 @@ document.getElementById("search").addEventListener("keydown", (event) =>{
 
         map.setView([latitude, longitude], 9);
 
+        //Marker till sökning
         let marker = new L.Marker([latitude, longitude]);
         marker.addTo(map);
-        
     })
     .catch(error => {
         console.error("Fel vid platshämtning:", error);
