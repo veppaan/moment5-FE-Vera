@@ -42,6 +42,10 @@ footer{
 }
 #map{
     height: 300px;
+    width: 400px;
+}
+#loading-map{
+    display: none;
 }
 
 @media (prefers-color-scheme: dark){

@@ -165,49 +165,23 @@ function printSecondChart(data){
 
 //Test kartfunktion
 
-async function getLatitude(){
-    return new Promise((resolve) =>{
-        if("geolocation" in navigator){
-            navigator.geolocation.getCurrentPosition(function(position){
-                let latitude = position.coords.latitude;
-                resolve(latitude)
-            }, function(error){
-                console.error("Fel vi hämtning av position: ", error.message);
-            });
-        }else{
-            console.error("Lokalisering stödjs ej i din webbläsare");
-        }
-    });
-}
-async function getLongitude(){
-    return new Promise((resolve) =>{
-        if("geolocation" in navigator){
-            navigator.geolocation.getCurrentPosition(function(position){
-                let longitude = position.coords.longitude;
-                resolve(longitude)
-            }, function(error){
-                console.error("Fel vi hämtning av position: ", error.message);
-            });
-        }else{
-            console.error("Lokalisering stödjs ej i din webbläsare");
-        }
-    });
-}
-
 let map;
-
+/**
+ * Laddar in användarens latitud och longitud och lägger in de i karta
+ */
 async function initMap() {
-    console.log("map");
+    let loadingText = document.getElementById("loading-map");
+    loadingText.style.display="block";
   const latitude = await getLatitude();
   const longitude = await getLongitude();
-  console.log("latitud: " + latitude);
-  console.log("longitud: " + longitude);
   
   const { Map } = await google.maps.importLibrary("maps");
 
+  loadingText.style.display="none";
+
 map = new Map(document.getElementById("map"), {
     center: { lat: latitude, lng: longitude },
-    zoom: 13,
+    zoom: 8,
   });
   
 }
