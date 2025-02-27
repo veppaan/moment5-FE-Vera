@@ -162,13 +162,16 @@ function printSecondChart(data){
     });
 }
 
-//Test kartfunktion
+//Kartfunktion
 
 const map = L.map("map").setView([59.325, 18.05], 10); 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+/**
+ * Funktion som söker efter plats från sökinput med hjälp av OpenStreetMap och Nominatim
+ */
 document.getElementById("search").addEventListener("keydown", (event) =>{
     let errorTxt = document.getElementById("errorMessage");
     errorTxt.style.visibility="hidden";
@@ -183,6 +186,9 @@ document.getElementById("search").addEventListener("keydown", (event) =>{
         const longitude = result.lon;
 
         map.setView([latitude, longitude], 9);
+
+        let marker = new L.Marker([latitude, longitude]);
+        marker.addTo(map);
         
     })
     .catch(error => {
