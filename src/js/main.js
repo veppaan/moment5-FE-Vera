@@ -175,7 +175,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 document.getElementById("search").addEventListener("keydown", (event) =>{
     let errorTxt = document.getElementById("errorMessage");
     errorTxt.style.visibility="hidden";
-    if(event.key === "Enter"){
+    if(event.key === "Enter"){ //Om användaren tryckt på enter så visas resultatet
         let inputValue = event.target.value;
     
     fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(inputValue)}&format=json`)
