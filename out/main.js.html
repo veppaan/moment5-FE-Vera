@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+const { resolve } = require("chart.js/helpers");
+
+//Hamburgermeny
+let openBtn = document.getElementById("open-menu");
+let closeBtn = document.getElementById("close-menu")
+
+//Händelselyssnare
+openBtn.addEventListener("click", toggleMenu);
+closeBtn.addEventListener("click", toggleMenu);
+
+/**
+ * Öppnar och stänger hamburgermeny
+ */
+function toggleMenu(){
+    let navMenuEl = document.getElementById("nav-menu");
+
+    let style = window.getComputedStyle(navMenuEl);
+    
+    if(style.display ==="none"){
+        navMenuEl.style.display = "block";
+    }else{
+        navMenuEl.style.display = "none";
+    }
+}
+
+let animationBtn = document.getElementById("animation-three");
+
+if(animationBtn){
+    animationBtn.addEventListener("click", startAnimation);
+}
+/**
+ * Startar en animering (hjärtat)
+ */
+function startAnimation(){
+    animationBtn.style.animation ="partyText 2s alternate ease-in-out"
+
+    setTimeout(() =>{
+        animationBtn.style.animation="";
+    }, 2000);
+}
+
+const firstChart = document.getElementById("firstChart");
+const secondChart = document.getElementById("secondChart");
+/**
+ * Anropar loadData vid ladding av sida
+ */
+window.onload = () =>{
+    if (firstChart || secondChart){
+    loadData();
+    }
+}
+
+//Ladda in data från URL
+/**
+ * @type {Array}
+ */
+let data = [];
+/**
+ * @type {Array}
+ */
+let topApplications = [];
+/**
+ * Hämtar data från URL och anropar sorteringsfunktioner
+ */
+async function loadData(){
+    try{
+        const response = await fetch("https://studenter.miun.se/~mallar/dt211g/");
+        if(!response.ok){
+            throw new Error("Fel vid laddnig av datan...");
+        }
+        data = await response.json();
+        sortPrograms(data);
+        sortCourses(data);
+    }catch(error){
+        console.error(error);
+        document.querySelector("#error").innerHTML = "&lt;p>Ett fel uppstod - prova igen senare!&lt;/p>"
+    }
+}
+/**
+ * Sorterar data efter program och de 6 med mest ansökningar
+ * Anropar utskriftsfunktion
+ * 
+ * @param {Array} data 
+ */
+function sortPrograms(data){
+    const programs = data.filter(a => a.type === "Program");
+    programs.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
+    for(let i = 0; i &lt; 6; i++){
+        topApplications.push(programs[i]);
+    }
+    printFirstChart(topApplications);
+}
+
+/**
+ * Skriver ut data till stapeldiagram
+ * @param {Array} data 
+ */
+function printFirstChart(data){
+    const firstChart = document.getElementById("firstChart");
+    new Chart(firstChart, {
+        type: "bar",
+        data: {
+            labels: [data[0].name, data[1].name, data[2].name, data[3].name, data[4].name, data[5].name],
+            datasets: [{
+                label: "Antal ansökningar",
+                data: [data[0].applicantsTotal, data[1].applicantsTotal, data[2].applicantsTotal, data[3].applicantsTotal, data[4].applicantsTotal, data[5].applicantsTotal],
+                borderWidth: 1
+            }],
+        },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Mest sökta program HT23 på Mittuniversitetet"
+                    }
+                }
+        }
+    });
+}
+/**
+ * Sorterar data efter kurser och de 5 med mest ansöknignar
+ * Anropar utskriftsfunktion
+ * @param {Array} data 
+ */
+function sortCourses(data){
+    let fiveCourses = [];
+    const courses = data.filter(a => a.type === "Kurs");
+    courses.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
+    for(let i = 0; i &lt; 5; i++){
+        fiveCourses.push(courses[i]);
+    }
+    printSecondChart(courses);
+}
+/**
+ * Skriver ut data till pie-diagram
+ * @param {Array} data 
+ */
+function printSecondChart(data){
+    const secondChart = document.getElementById("secondChart");
+    new Chart(secondChart, {
+        type: "pie",
+        data: {
+            labels: [data[0].name, data[1].name, data[2].name, data[3].name, data[4].name],
+            datasets: [{
+                label: "Antal ansökningar",
+                data: [data[0].applicantsTotal, data[1].applicantsTotal, data[2].applicantsTotal, data[3].applicantsTotal, data[4].applicantsTotal],
+                borderWidth: 1
+            }],
+        },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Mest sökta kurser HT23 på Mittuniversitetet"
+                    }
+                }
+        }
+    });
+}
+
+//Kartfunktion
+
+const map = L.map("map").setView([59.325, 18.05], 10); 
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&amp;copy; &lt;a href="http://www.openstreetmap.org/copyright">OpenStreetMap&lt;/a>'
+}).addTo(map);
+/**
+ * Funktion som söker efter plats från sökinput med hjälp av OpenStreetMap och Nominatim
+ */
+document.getElementById("search").addEventListener("keydown", (event) =>{
+    let errorTxt = document.getElementById("errorMessage");
+    errorTxt.style.visibility="hidden";
+    if(event.key === "Enter"){ //Om användaren tryckt på enter så visas resultatet
+        let inputValue = event.target.value;
+    
+    fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(inputValue)}&amp;format=json`)
+    .then(response => response.json())
+    .then(data => {
+        const result = data[0];
+        const latitude = result.lat;
+        const longitude = result.lon;
+
+        map.setView([latitude, longitude], 9);
+
+        //Marker till sökning
+        let marker = new L.Marker([latitude, longitude]);
+        marker.addTo(map);
+    })
+    .catch(error => {
+        console.error("Fel vid platshämtning:", error);
+        errorTxt.innerHTML="Fel vid inhämtning av plats, kolla stavfel och försök igen!";
+        errorTxt.style.visibility="visible";
+    });
+
+    }
+}
+)
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#data">data</a></li><li><a href="global.html#loadData">loadData</a></li><li><a href="global.html#printFirstChart">printFirstChart</a></li><li><a href="global.html#printSecondChart">printSecondChart</a></li><li><a href="global.html#sortCourses">sortCourses</a></li><li><a href="global.html#sortPrograms">sortPrograms</a></li><li><a href="global.html#startAnimation">startAnimation</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#topApplications">topApplications</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Mar 05 2025 15:19:53 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
